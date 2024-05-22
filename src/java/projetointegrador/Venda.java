@@ -3,6 +3,8 @@ package projetointegrador;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import projetointegrador.Produto;
+import projetointegrador.ProdutoVendido;
 
 public class Venda {
     private int id;
@@ -17,7 +19,6 @@ public class Venda {
         this.produtosVendidos = new ArrayList<>();
         this.quantidadeTotal = 0;
     }
-
 
     public int getId() {
         return id;
@@ -43,19 +44,32 @@ public class Venda {
         this.quantidadeTotal = quantidadeTotal;
     }
 
-    public double calcularValorTotal() {
-        double valorTotal = 0.0;
-        for (ProdutoVendido produtoVendido : produtosVendidos) {
-            valorTotal += produtoVendido.getValorTotal();
-        }
-        return valorTotal;
+    private double desconto;
+
+    public double getDesconto() {
+        return desconto;
     }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
+    }
+
+  public double calcularValorTotal() {
+    double valorTotal = 0.0;
+    for (ProdutoVendido produtoVendido : produtosVendidos) {
+        valorTotal += produtoVendido.getValorTotal();
+    }
+
+    return valorTotal;
+}
+
 
     public boolean adicionarProduto(Produto produto, int quantidade, double valorProduto) {
         ProdutoVendido produtoVendido = new ProdutoVendido(produto, quantidade, valorProduto);
         boolean sucesso = produtosVendidos.add(produtoVendido);
 
         if (sucesso) {
+            produto.atualizarEstoque(quantidade);
             quantidadeTotal += quantidade;
         }
 
@@ -63,6 +77,6 @@ public class Venda {
     }
 
     public void setProdutosVendidos(List<ProdutoVendido> produtosVendidos) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.produtosVendidos = produtosVendidos;
     }
 }

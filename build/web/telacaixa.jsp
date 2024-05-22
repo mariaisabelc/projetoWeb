@@ -1,4 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.List" %>
+<%@ page import="projetointegrador.Venda" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +14,7 @@
             text-align: center;
             padding-top: 50px; 
         }
-       table {
+        table {
             margin: 0 auto; 
             border-collapse: collapse; 
             width: 80%; 
@@ -32,19 +36,26 @@
         <thead>
             <tr>
                 <th>Data</th>
-                <th>Venda</th>
-                <th>Valor</th>
-                <th>Saldo</th>
+                <th>Cliente</th>
+                <th>Valor Total</th>
             </tr>
         </thead>
         <tbody>
-         
-            <%-- <tr> --%>
-            <%--     <td>Valor dinâmico</td> --%>
-            <%--     <td>Valor dinâmico</td> --%>
-            <%--     <td>Valor dinâmico</td> --%>
-            <%--     <td>Valor dinâmico</td> --%>
-            <%-- </tr> --%>
+            <%
+                List<Venda> vendas = (List<Venda>) session.getAttribute("vendas");
+                if (vendas != null) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    for (Venda venda : vendas) {
+            %>
+            <tr>
+                <td><%= sdf.format(venda.getData()) %></td>
+                <td><%= venda.getCliente().getNome() %></td>
+                <td><%= venda.calcularValorTotal() %></td>
+            </tr>
+            <%
+                    }
+                }
+            %>
         </tbody>
     </table>
     <form action="telainicial.jsp">

@@ -1,36 +1,31 @@
-
 package projetointegrador;
 
-
 public class Cliente {
-     private int id;
+    private String nome;
+    private String cpf;
+    private String endereco;
+    private String telefone;
 
-String nome;
+    public Cliente(String nome, String cpf, String endereco, String telefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
 
-String endereco;
+    public String getNome() {
+        return nome;
+    }
 
-String telefone;
+    public String getCpf() {
+        return cpf;
+    }
 
-String  email;
+    public String getEndereco() {
+        return endereco;
+    }
 
-
-public Cliente (String nome, String endereco, String telefone, String email){
-    this.nome= nome;
-    this.endereco=endereco;
-    this.telefone= telefone;
-    this.email=email;
-            
-}
- public String getNome(){
-     return nome;
- }
-  public String getEndereco(){
-     return endereco;
- }
-   public String getTelefone(){
-     return telefone;
- }
-    public String getEmail(){
-     return email;
- }
+    public String getTelefone() {
+        return telefone;
+    }
 }
