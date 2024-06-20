@@ -48,19 +48,12 @@
 </head>
 <body>
     <h1>Login</h1>
-    <form action="TelaLogin" method="post" onsubmit="return redirecionarParaTelaInicial()">
+    <form action="login" method="post">
         <label for="username">Usuário:</label>
         <input type="text" id="username" name="username"><br><br>
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Entrar">
     </form>
-
-    <script>
-        function redirecionarParaTelaInicial() {
-            window.location.href = "telainicial.jsp";
-            return false; 
-        }
-    </script>
 </body>
 </html>

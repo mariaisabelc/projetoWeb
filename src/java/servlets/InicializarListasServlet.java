@@ -6,32 +6,34 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import projetointegrador.Cliente;
+import projetointegrador.ClienteBD;
 import projetointegrador.Produto;
+import projetointegrador.ProdutoBD;
 
-@WebServlet("/InicializarListasServlet")
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+@WebServlet("/InitializeServlet")
 public class InicializarListasServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public void init() throws ServletException {
+        try {
+            List<Cliente> clientes = ClienteBD.getAllClientes();
+            List<Produto> produtos = ProdutoBD.getAllProdutos();
+
+            getServletContext().setAttribute("clientes", clientes);
+            getServletContext().setAttribute("produtos", produtos);
+        } catch (SQLException e) {
+            throw new ServletException("Failed to load initial data", e);
+        }
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-    
-        List<Cliente> clientes = (List<Cliente>) session.getAttribute("clientes");
-        if (clientes == null) {
-            clientes = new ArrayList<>();
-            session.setAttribute("clientes", clientes);
-        }
-
-    
-        List<Produto> produtos = (List<Produto>) session.getAttribute("produtos");
-        if (produtos == null) {
-            produtos = new ArrayList<>();
-            session.setAttribute("produtos", produtos);
-        }
-
-        response.sendRedirect("telavendas.jsp");
+       
+        response.sendRedirect("telacaixa.jsp");
     }
 }

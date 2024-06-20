@@ -6,11 +6,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import projetointegrador.Cliente;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import projetointegrador.Cliente;
+import projetointegrador.ClienteBD;
 
 @WebServlet("/AdicionarClienteServlet")
 public class AdicionarClienteServlet extends HttpServlet {
@@ -33,6 +37,19 @@ public class AdicionarClienteServlet extends HttpServlet {
 
         clientes.add(cliente);
         session.setAttribute("clientes", clientes);
+
+        try (Connection connection = ClienteBD.getConnection()) {
+            String sql = "INSERT INTO cliente (nome, cpf, endereco, telefone) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, nome);
+                statement.setString(2, cpf);
+                statement.setString(3, endereco);
+                statement.setString(4, telefone);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new ServletException("Erro ao salvar cliente no banco de dados", e);
+        }
 
         request.getRequestDispatcher("telatodosclientes.jsp").forward(request, response);
     }

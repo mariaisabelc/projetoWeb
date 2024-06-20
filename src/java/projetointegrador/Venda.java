@@ -3,25 +3,35 @@ package projetointegrador;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import projetointegrador.Produto;
-import projetointegrador.ProdutoVendido;
 
 public class Venda {
     private int id;
     private Cliente cliente;
     private Date data;
     private List<ProdutoVendido> produtosVendidos;
-    private int quantidadeTotal;
+    private double desconto;
 
-    public Venda(Cliente cliente) {
+    public Venda(int id, Cliente cliente, Date data, double desconto) {
+        this.id = id;
+        this.cliente = cliente;
+        this.data = data;
+        this.desconto = desconto;
+        this.produtosVendidos = new ArrayList<>();
+    }
+
+    public Venda(Cliente cliente, double desconto) {
         this.cliente = cliente;
         this.data = new Date();
+        this.desconto = desconto;
         this.produtosVendidos = new ArrayList<>();
-        this.quantidadeTotal = 0;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Cliente getCliente() {
@@ -36,15 +46,9 @@ public class Venda {
         return produtosVendidos;
     }
 
-    public int getQuantidadeTotal() {
-        return quantidadeTotal;
+    public void setProdutosVendidos(List<ProdutoVendido> produtosVendidos) {
+        this.produtosVendidos = produtosVendidos;
     }
-
-    public void setQuantidadeTotal(int quantidadeTotal) {
-        this.quantidadeTotal = quantidadeTotal;
-    }
-
-    private double desconto;
 
     public double getDesconto() {
         return desconto;
@@ -54,29 +58,27 @@ public class Venda {
         this.desconto = desconto;
     }
 
-  public double calcularValorTotal() {
-    double valorTotal = 0.0;
-    for (ProdutoVendido produtoVendido : produtosVendidos) {
-        valorTotal += produtoVendido.getValorTotal();
+    public double calcularValorTotal() {
+        double valorTotal = 0.0;
+        for (ProdutoVendido produtoVendido : produtosVendidos) {
+            valorTotal += produtoVendido.getValorTotal();
+        }
+        return valorTotal - desconto;
     }
-
-    return valorTotal;
-}
-
 
     public boolean adicionarProduto(Produto produto, int quantidade, double valorProduto) {
         ProdutoVendido produtoVendido = new ProdutoVendido(produto, quantidade, valorProduto);
-        boolean sucesso = produtosVendidos.add(produtoVendido);
-
-        if (sucesso) {
-            produto.atualizarEstoque(quantidade);
-            quantidadeTotal += quantidade;
-        }
-
-        return sucesso;
+        return produtosVendidos.add(produtoVendido);
     }
 
-    public void setProdutosVendidos(List<ProdutoVendido> produtosVendidos) {
-        this.produtosVendidos = produtosVendidos;
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "id=" + id +
+                ", cliente=" + cliente +
+                ", data=" + data +
+                ", produtosVendidos=" + produtosVendidos +
+                ", desconto=" + desconto +
+                '}';
     }
 }

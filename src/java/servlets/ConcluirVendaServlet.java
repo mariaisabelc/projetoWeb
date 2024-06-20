@@ -17,6 +17,7 @@ import projetointegrador.Venda;
 public class ConcluirVendaServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
@@ -51,9 +52,8 @@ public class ConcluirVendaServlet extends HttpServlet {
         }
 
         if (cliente != null && produto != null) {
-            double valorTotalComDesconto = valorTotal;
-            Venda venda = new Venda(cliente);
-            venda.adicionarProduto(produto, quantidade, valorTotalComDesconto); 
+            Venda venda = new Venda(cliente, desconto); // Usando o construtor adequado
+            venda.adicionarProduto(produto, quantidade, valorTotal); 
 
             List<Venda> vendas = (List<Venda>) session.getAttribute("vendas");
             if (vendas == null) {
@@ -63,8 +63,6 @@ public class ConcluirVendaServlet extends HttpServlet {
             vendas.add(venda);
 
             session.setAttribute("vendas", vendas);
-
-            // Atualiza a lista de produtos na sessão
             session.setAttribute("produtos", produtos);
 
             response.sendRedirect("telacaixa.jsp");
@@ -73,6 +71,7 @@ public class ConcluirVendaServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }

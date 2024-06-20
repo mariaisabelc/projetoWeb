@@ -2,7 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="projetointegrador.Cliente" %>
 <%@ page import="projetointegrador.Produto" %>
-<%@ page import="projetointegrador.Venda" %>
 
 <!DOCTYPE html>
 <html>
@@ -76,7 +75,6 @@
             var desconto = document.getElementById('porcentagemDesconto').value;
             var valorTotal = document.getElementById('valorTotalVenda').value;
 
-            
             window.location.href = "ConcluirVendaServlet?cliente=" + cliente + "&produto=" + produto + "&quantidade=" + quantidade + "&desconto=" + desconto + "&valorTotal=" + valorTotal;
         }
     </script>
@@ -112,12 +110,12 @@
         </select>
         <label for="quantidade">Quantidade:</label>
         <input type="text" id="quantidade">
-        <label for="porcentagemDesconto">Desconto:</label>
+        <label for="porcentagemDesconto">Desconto (%):</label>
         <input type="text" id="porcentagemDesconto">
         <button type="button" onclick="calcularTotal()">Calcular</button>
         <label for="valorTotalVenda">Valor Total:</label>
         <input type="text" id="valorTotalVenda" readonly>
-        <button type="button" onclick="concluirVenda()">Concluir</button>
+        <button type="button" onclick="concluirVenda()">Concluir Venda</button>
     </form>
 </body>
 </html>

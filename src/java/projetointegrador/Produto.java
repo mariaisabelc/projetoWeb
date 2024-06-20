@@ -6,7 +6,7 @@ public class Produto {
     private String descricao;
     private double preco;         
     private int qtEstoque;
-    
+
     public Produto(String nomeProduto, String descricao, double preco, int qtEstoque) {
         this.nomeProduto = nomeProduto;
         this.descricao = descricao;
@@ -14,6 +14,11 @@ public class Produto {
         this.qtEstoque = qtEstoque;         
     }
 
+    Produto(int idProduto, String nomeProduto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    // Getters e Setters
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -30,19 +35,7 @@ public class Produto {
         return qtEstoque;
     }
 
-    public void atualizarEstoque(int quantidade) {
-        this.qtEstoque -= quantidade;
-    }
-
-    @Override
-    public String toString() {
-        return "Nome do Produto: " + nomeProduto +
-               ", Preço: " + preco +
-               ", Quantidade em Estoque: " + qtEstoque;
-    }
-
-    
-    public boolean isVendido() {
-        return false; 
+    int getId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
